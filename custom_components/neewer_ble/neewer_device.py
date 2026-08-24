@@ -478,6 +478,17 @@ class NeewerLightDevice:
         if color_temp_kelvin is not None:
             self._color_temp = self._kelvin_to_internal(color_temp_kelvin)
 
+        # Power on first. On these lights power is a latched state that gates
+        # brightness/CCT: frames sent while the light is in standby are accepted
+        # over BLE but ignored (observed on NEEWER SNL1320 via an ESPHome proxy;
+        # same behaviour verified on the 2.4 GHz CB150). Sending power-on to a
+        # light that is already on is harmless. Power OFF is deliberately still
+        # done with brightness=0 in turn_off() -- see its docstring.
+        power_cmd = self._build_power_command(True)
+        if not await self._send_command(power_cmd, keep_connected=True):
+            return False
+        await asyncio.sleep(0.05)
+
         # For RGB lights with hue/saturation
         if self.supports_rgb and hue is not None:
             self._hue = max(0, min(360, hue))

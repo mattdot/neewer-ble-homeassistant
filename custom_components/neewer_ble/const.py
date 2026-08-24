@@ -46,6 +46,12 @@ SUPPORTED_MODELS = {
     "SNL660": {"name": "SNL-660", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
     "SNL530": {"name": "SNL-530", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
     "SNL480": {"name": "SNL-480", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
+    # SNL960/1320/1920: verified on SNL1320 hardware 2026-08-24 -- these panels
+    # silently ignore the combined 0x87 CCT command and need the separate
+    # 0x82 brightness / 0x83 temperature frames (cct_only), after a power-on.
+    "SNL960": {"name": "SNL-960", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
+    "SNL1320": {"name": "SNL-1320", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
+    "SNL1920": {"name": "SNL-1920", "rgb": False, "cct_range": (3200, 5600), "cct_only": True, "light_type": 0},
 
     # GL Series (Key lights) - Infinity protocol
     "20220001": {"name": "GL1", "rgb": False, "cct_range": (2900, 7000), "cct_only": False, "light_type": 1},
